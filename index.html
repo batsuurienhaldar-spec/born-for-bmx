@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Born For BMX</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        @media (max-width: 768px) {
+    header { padding: 16px 20px; }
+    .logo { font-size: 20px; }
+    nav a { margin-left: 16px; font-size: 12px; }
+    .hero { padding: 60px 20px; }
+    .hero h1 { font-size: 36px; letter-spacing: 2px; }
+    .hero p { font-size: 15px; }
+    .categories { padding: 20px 16px; gap: 8px; }
+    .cat-btn { padding: 8px 14px; font-size: 11px; }
+    .products { padding: 40px 20px; }
+    .grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .card-img-wrap { height: 160px; }
+    .card-body { padding: 12px; }
+    .card-name { font-size: 14px; }
+    .card-price { font-size: 18px; }
+    .order-btn { padding: 10px; font-size: 12px; }
+    .admin-fab { bottom: 20px; right: 20px; width: 48px; height: 48px; font-size: 20px; }
+}
+        body { background: #0a0a0a; color: #fff; font-family: 'Arial', sans-serif; }
+
+        /* HEADER */
+        header { background: #111; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; border-bottom: 2px solid #e63946; }
+        .logo { font-size: 28px; font-weight: 900; color: #e63946; letter-spacing: 2px; }
+        nav a { color: #fff; text-decoration: none; margin-left: 30px; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s; }
+        nav a:hover { color: #e63946; }
+
+        /* HERO */
+        .hero { background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%); padding: 120px 40px; text-align: center; }
+        .hero h1 { font-size: 72px; font-weight: 900; text-transform: uppercase; letter-spacing: 6px; animation: fadeUp 0.8s ease; }
+        .hero h1 span { color: #e63946; }
+        .hero p { font-size: 18px; color: #aaa; margin-top: 20px; animation: fadeUp 1s ease; }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* CATEGORIES */
+        .categories { padding: 30px 40px; background: #111; display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; border-bottom: 1px solid #222; border-top: 1px solid #222; }
+        .cat-btn { background: #1a1a1a; color: #fff; border: 1px solid #333; padding: 10px 24px; border-radius: 4px; cursor: pointer; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s; }
+        .cat-btn:hover, .cat-btn.active { background: #e63946; border-color: #e63946; transform: translateY(-2px); }
+
+        /* PRODUCTS */
+        .products { padding: 60px 40px; }
+        .products h2 { font-size: 32px; font-weight: 900; text-transform: uppercase; margin-bottom: 40px; letter-spacing: 2px; }
+        .products h2 span { color: #e63946; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; }
+
+        /* CARD */
+        .card { background: #111; border: 1px solid #222; border-radius: 8px; overflow: hidden; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: pointer; }
+        .card:hover { transform: translateY(-8px); border-color: #e63946; box-shadow: 0 20px 40px rgba(230, 57, 70, 0.2); }
+        .card-img-wrap { overflow: hidden; height: 220px; }
+        .card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+        .card:hover img { transform: scale(1.08); }
+        .card-body { padding: 20px; }
+        .card-cat { font-size: 11px; color: #e63946; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px; }
+        .card-name { font-size: 18px; font-weight: 700; margin-bottom: 8px; transition: color 0.3s; }
+        .card:hover .card-name { color: #e63946; }
+        .card-price { font-size: 22px; font-weight: 900; color: #e63946; margin-bottom: 16px; }
+        .order-btn { width: 100%; background: #e63946; color: #fff; border: none; padding: 12px; font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; border-radius: 4px; transition: all 0.3s; position: relative; overflow: hidden; }
+        .order-btn::before { content: ''; position: absolute; top: 50%; left: 50%; width: 0; height: 0; background: rgba(255,255,255,0.2); border-radius: 50%; transform: translate(-50%, -50%); transition: width 0.6s, height 0.6s; }
+        .order-btn:hover::before { width: 300px; height: 300px; }
+        .order-btn:hover { background: #c1121f; transform: scale(1.02); }
+
+        /* TOOLTIP */
+        .card-img-wrap { position: relative; }
+        .tooltip { position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.85); padding: 12px; font-size: 13px; color: #ccc; transform: translateY(100%); transition: transform 0.3s ease; }
+        .card:hover .tooltip { transform: translateY(0); }
+
+        /* EMPTY */
+        .empty { text-align: center; padding: 80px; color: #444; grid-column: 1/-1; }
+        .empty p { font-size: 20px; margin-top: 16px; }
+
+        /* ADMIN PANEL */
+        .admin-fab { position: fixed; bottom: 30px; right: 30px; background: #e63946; color: #fff; border: none; width: 56px; height: 56px; border-radius: 50%; font-size: 24px; cursor: pointer; box-shadow: 0 4px 20px rgba(230,57,70,0.4); transition: all 0.3s; z-index: 999; }
+        .admin-fab:hover { transform: scale(1.1) rotate(90deg); }
+
+        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 1000; justify-content: center; align-items: center; }
+        .modal-overlay.open { display: flex; }
+        .modal { background: #111; border: 1px solid #333; border-radius: 12px; padding: 40px; width: 500px; max-width: 95vw; max-height: 90vh; overflow-y: auto; }
+        .modal h2 { font-size: 24px; font-weight: 900; margin-bottom: 24px; color: #e63946; text-transform: uppercase; }
+
+        /* LOGIN */
+        .login-form input { width: 100%; background: #1a1a1a; border: 1px solid #333; color: #fff; padding: 14px; border-radius: 6px; font-size: 15px; margin-bottom: 16px; outline: none; }
+        .login-form input:focus { border-color: #e63946; }
+        .btn-red { width: 100%; background: #e63946; color: #fff; border: none; padding: 14px; font-size: 15px; font-weight: 700; border-radius: 6px; cursor: pointer; text-transform: uppercase; transition: background 0.3s; }
+        .btn-red:hover { background: #c1121f; }
+        .error-msg { color: #e63946; font-size: 13px; margin-bottom: 12px; display: none; }
+
+        /* ADMIN FORM */
+        .admin-form { display: none; }
+        .admin-form.show { display: block; }
+        .form-group { margin-bottom: 16px; }
+        .form-group label { display: block; font-size: 12px; color: #aaa; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; background: #1a1a1a; border: 1px solid #333; color: #fff; padding: 12px; border-radius: 6px; font-size: 14px; outline: none; }
+        .form-group input:focus, .form-group select:focus { border-color: #e63946; }
+        .form-group select option { background: #1a1a1a; }
+        .img-preview { width: 100%; height: 150px; object-fit: cover; border-radius: 6px; margin-top: 8px; display: none; border: 1px solid #333; }
+
+        /* PRODUCT LIST IN ADMIN */
+        .admin-products { margin-top: 30px; border-top: 1px solid #222; padding-top: 20px; }
+        .admin-product-item { display: flex; align-items: center; gap: 12px; padding: 12px; background: #1a1a1a; border-radius: 6px; margin-bottom: 8px; border: 1px solid #222; }
+        .admin-product-item img { width: 50px; height: 50px; object-fit: cover; border-radius: 4px; }
+        .admin-product-info { flex: 1; }
+        .admin-product-info strong { display: block; font-size: 14px; }
+        .admin-product-info span { font-size: 12px; color: #e63946; }
+        .delete-btn { background: #333; color: #fff; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; transition: background 0.2s; }
+        .delete-btn:hover { background: #e63946; }
+
+        /* FOOTER */
+        footer { background: #111; border-top: 2px solid #e63946; padding: 40px; text-align: center; color: #666; font-size: 13px; margin-top: 40px; }
+        footer span { color: #e63946; }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">BORN FOR BMX</div>
+    <nav>
+        <a href="#">Home</a>
+        <a href="#">Shop</a>
+    </nav>
+</header>
+
+<section class="hero">
+    <h1>BORN FOR <span>BMX</span></h1>
+    <p>Mongolia's #1 BMX Shop — Premium bikes & parts</p>
+</section>
+
+<div class="categories">
+    <button class="cat-btn active" onclick="filterCat('all', this)">All</button>
+    <button class="cat-btn" onclick="filterCat('complete', this)">Complete Bikes</button>
+    <button class="cat-btn" onclick="filterCat('frames', this)">Frames & Forks</button>
+    <button class="cat-btn" onclick="filterCat('steering', this)">Steering</button>
+    <button class="cat-btn" onclick="filterCat('wheels', this)">Wheels & Tires</button>
+    <button class="cat-btn" onclick="filterCat('drivetrain', this)">Drivetrain</button>
+    <button class="cat-btn" onclick="filterCat('grind', this)">Grind</button>
+    <button class="cat-btn" onclick="filterCat('brakes', this)">Brakes</button>
+    <button class="cat-btn" onclick="filterCat('seat', this)">Seat & Post</button>
+    <button class="cat-btn" onclick="filterCat('other', this)">Other</button>
+</div>
+
+<section class="products">
+    <h2>OUR <span>PRODUCTS</span></h2>
+    <div class="grid" id="productGrid"></div>
+</section>
+
+<footer>
+    <p>© 2026 <span>Born For BMX</span> — Mongolia's Premium BMX Shop</p>
+</footer>
+
+<!-- Admin FAB -->
+<button class="admin-fab" onclick="openAdmin()">⚙</button>
+
+<!-- Admin Modal -->
+<div class="modal-overlay" id="adminModal">
+    <div class="modal">
+        <h2>🔐 Admin Panel</h2>
+
+        <!-- Login -->
+        <div class="login-form" id="loginForm">
+            <p class="error-msg" id="errorMsg">Нууц үг буруу байна!</p>
+            <input type="password" id="passwordInput" placeholder="Нууц үг оруулна уу" onkeydown="if(event.key==='Enter')checkPassword()">
+            <button class="btn-red" onclick="checkPassword()">Нэвтрэх</button>
+        </div>
+
+        <!-- Admin Form -->
+        <div class="admin-form" id="adminForm">
+            <div class="form-group">
+                <label>Бүтээгдэхүүний нэр</label>
+                <input type="text" id="prodName" placeholder="жнь: Haro Leucadia 24">
+            </div>
+            <div class="form-group">
+                <label>Үнэ</label>
+                <input type="text" id="prodPrice" placeholder="жнь: $450">
+            </div>
+            <div class="form-group">
+                <label>Category</label>
+                <select id="prodCat">
+                    <option value="complete">Complete Bikes</option>
+                    <option value="frames">Frames & Forks</option>
+                    <option value="steering">Steering</option>
+                    <option value="wheels">Wheels & Tires</option>
+                    <option value="drivetrain">Drivetrain</option>
+                    <option value="grind">Grind</option>
+                    <option value="brakes">Brakes</option>
+                    <option value="seat">Seat & Post</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Зургийн URL</label>
+                <input type="text" id="prodImg" placeholder="https://..." oninput="previewImg()">
+                <img id="imgPreview" class="img-preview" alt="preview">
+            </div>
+            <div class="form-group">
+                <label>Тайлбар (заавал биш)</label>
+                <input type="text" id="prodDesc" placeholder="жнь: Chromoly frame, 20 inch">
+            </div>
+            <button class="btn-red" onclick="addProduct()">+ Бүтээгдэхүүн нэмэх</button>
+
+            <div class="admin-products">
+                <h3 style="margin-bottom:16px; color:#aaa; font-size:14px; text-transform:uppercase;">Бүтээгдэхүүнүүд</h3>
+                <div id="adminProductList"></div>
+            </div>
+
+            <button onclick="closeAdmin()" style="width:100%;margin-top:20px;background:#1a1a1a;color:#666;border:1px solid #333;padding:12px;border-radius:6px;cursor:pointer;">Хаах</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const ADMIN_PASSWORD = 'bmx2026';
+    const CATS = { complete:'Complete Bikes', frames:'Frames & Forks', steering:'Steering', wheels:'Wheels & Tires', drivetrain:'Drivetrain', grind:'Grind', brakes:'Brakes', seat:'Seat & Post', other:'Other' };
+
+    let products = JSON.parse(localStorage.getItem('bfb_products') || '[]');
+    let currentCat = 'all';
+
+    function saveProducts() { localStorage.setItem('bfb_products', JSON.stringify(products)); }
+
+    function renderProducts() {
+        const grid = document.getElementById('productGrid');
+        const filtered = currentCat === 'all' ? products : products.filter(p => p.cat === currentCat);
+        if (filtered.length === 0) {
+            grid.innerHTML = '<div class="empty"><p>Бүтээгдэхүүн байхгүй байна</p></div>';
+            return;
+        }
+        grid.innerHTML = filtered.map((p, i) => `
+            <div class="card">
+                <div class="card-img-wrap">
+                    <img src="${p.img || 'https://placehold.co/400x220/1a1a1a/e63946?text=No+Image'}" alt="${p.name}" onerror="this.src='https://placehold.co/400x220/1a1a1a/e63946?text=No+Image'">
+                    ${p.desc ? `<div class="tooltip">${p.desc}</div>` : ''}
+                </div>
+                <div class="card-body">
+                    <div class="card-cat">${CATS[p.cat] || p.cat}</div>
+                    <div class="card-name">${p.name}</div>
+                    <div class="card-price">${p.price}</div>
+                    <button class="order-btn" onclick="orderFB('${p.name}', '${p.price}')">Захиалах</button>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function renderAdminList() {
+        document.getElementById('adminProductList').innerHTML = products.map((p, i) => `
+            <div class="admin-product-item">
+                <img src="${p.img || 'https://placehold.co/50x50/1a1a1a/e63946?text=?'}" onerror="this.src='https://placehold.co/50x50/1a1a1a/e63946?text=?'">
+                <div class="admin-product-info">
+                    <strong>${p.name}</strong>
+                    <span>${p.price} — ${CATS[p.cat] || p.cat}</span>
+                </div>
+                <button class="delete-btn" onclick="deleteProduct(${i})">Устгах</button>
+            </div>
+        `).join('') || '<p style="color:#444;font-size:13px;">Бүтээгдэхүүн байхгүй</p>';
+    }
+
+    function filterCat(cat, btn) {
+        currentCat = cat;
+        document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderProducts();
+    }
+
+    function orderFB(name, price) {
+        const msg = encodeURIComponent(`Сайн байна уу! "${name}" (${price}) захиалмаар байна.`);
+        window.open(`https://m.me/108317618117337?text=${msg}`, '_blank');
+    }
+
+    function openAdmin() {
+        document.getElementById('adminModal').classList.add('open');
+        document.getElementById('loginForm').style.display = 'block';
+        document.getElementById('adminForm').classList.remove('show');
+        document.getElementById('passwordInput').value = '';
+        document.getElementById('errorMsg').style.display = 'none';
+    }
+
+    function closeAdmin() {
+        document.getElementById('adminModal').classList.remove('open');
+    }
+
+    function checkPassword() {
+        const pw = document.getElementById('passwordInput').value;
+        if (pw === ADMIN_PASSWORD) {
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('adminForm').classList.add('show');
+            renderAdminList();
+        } else {
+            document.getElementById('errorMsg').style.display = 'block';
+        }
+    }
+
+    function previewImg() {
+        const url = document.getElementById('prodImg').value;
+        const preview = document.getElementById('imgPreview');
+        if (url) { preview.src = url; preview.style.display = 'block'; }
+        else { preview.style.display = 'none'; }
+    }
+
+    function addProduct() {
+        const name = document.getElementById('prodName').value.trim();
+        const price = document.getElementById('prodPrice').value.trim();
+        const cat = document.getElementById('prodCat').value;
+        const img = document.getElementById('prodImg').value.trim();
+        const desc = document.getElementById('prodDesc').value.trim();
+        if (!name || !price) { alert('Нэр болон үнэ оруулна уу!'); return; }
+        products.push({ name, price, cat, img, desc });
+        saveProducts();
+        renderProducts();
+        renderAdminList();
+        document.getElementById('prodName').value = '';
+        document.getElementById('prodPrice').value = '';
+        document.getElementById('prodImg').value = '';
+        document.getElementById('prodDesc').value = '';
+        document.getElementById('imgPreview').style.display = 'none';
+    }
+
+    function deleteProduct(i) {
+        if (confirm('Устгах уу?')) {
+            products.splice(i, 1);
+            saveProducts();
+            renderProducts();
+            renderAdminList();
+        }
+    }
+
+    document.getElementById('adminModal').addEventListener('click', function(e) {
+        if (e.target === this) closeAdmin();
+    });
+
+    renderProducts();
+</script>
+</body>
+</html>
