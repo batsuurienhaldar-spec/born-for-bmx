@@ -34,6 +34,15 @@
         .hero h1 span { color: #e63946; }
         .hero p { font-size: 18px; color: #aaa; margin-top: 20px; animation: fadeUp 1s ease; }
         @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .hero { position: relative; overflow: hidden; min-height: 500px; display: flex; align-items: center; justify-content: center; }
+.slider { position: absolute; inset: 0; }
+.slide { position: absolute; inset: 0; background-size: cover; background-position: center; opacity: 0; transition: opacity 1s ease; }
+.slide.active { opacity: 1; }
+.hero-content { position: relative; z-index: 2; text-align: center; padding: 120px 40px; }
+.hero-content::before { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,0.5); z-index: -1; border-radius: 8px; }
+.slider-dots { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; z-index: 3; }
+.dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.4); cursor: pointer; transition: background 0.3s; }
+.dot.active { background: #e63946; }
         .categories { padding: 30px 40px; background: #111; display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; border-bottom: 1px solid #222; border-top: 1px solid #222; }
         .cat-btn { background: #1a1a1a; color: #fff; border: 1px solid #333; padding: 10px 24px; border-radius: 4px; cursor: pointer; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s; }
         .cat-btn:hover, .cat-btn.active { background: #e63946; border-color: #e63946; transform: translateY(-2px); }
@@ -101,9 +110,19 @@
     </nav>
 </header>
 
-<section class="hero">
-    <h1>BORN FOR <span>BMX</span></h1>
-    <p>Mongolia's #1 BMX Shop — We Build Dreams</p>
+We Build Dreams<section class="hero">
+    <div class="slider">
+        <div class="slide active" style="background-image:url('https://drive.google.com/uc?export=view&id=1U_limNE3gbl5R9pqZ5kYYQs0yQEKDEj-')"></div>
+        <div class="slide" style="background-image:url('https://drive.google.com/uc?export=view&id=12wFrU7BLWKf8QjPeGmR6RLrX0BfP96f_')"></div>
+    </div>
+    <div class="hero-content">
+        <h1>BORN FOR <span>BMX</span></h1>
+        <p>Mongolia's #1 BMX Shop — We Build Dreams</p>
+    </div>
+    <div class="slider-dots">
+        <span class="dot active" onclick="goToSlide(0)"></span>
+        <span class="dot" onclick="goToSlide(1)"></span>
+    </div>
 </section>
 
 <div class="categories">
@@ -295,6 +314,24 @@
         const { error } = await sb.from('products').insert([{ name, price, cat, img, desc }]);
         if (error) { alert('Алдаа гарлаа!'); console.error(error); return; }
         await loadProducts();
+        // SLIDER
+let currentSlide = 0;
+const slides = document.querySelectorAll('.slide');
+const dots = document.querySelectorAll('.dot');
+
+function goToSlide(n) {
+    slides[currentSlide].classList.remove('active');
+    dots[currentSlide].classList.remove('active');
+    currentSlide = n;
+    slides[currentSlide].classList.add('active');
+    dots[currentSlide].classList.add('active');
+}
+
+function nextSlide() {
+    goToSlide((currentSlide + 1) % slides.length);
+}
+
+setInterval(nextSlide, 4000);
         renderAdminList();
         document.getElementById('prodName').value = '';
         document.getElementById('prodPrice').value = '';
