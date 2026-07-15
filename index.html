@@ -7,23 +7,23 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         @media (max-width: 768px) {
-    header { padding: 16px 20px; }
-    .logo { font-size: 20px; }
-    nav a { margin-left: 16px; font-size: 12px; }
-    .hero { padding: 60px 20px; }
-    .hero h1 { font-size: 36px; letter-spacing: 2px; }
-    .hero p { font-size: 15px; }
-    .categories { padding: 20px 16px; gap: 8px; }
-    .cat-btn { padding: 8px 14px; font-size: 11px; }
-    .products { padding: 40px 20px; }
-    .grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-    .card-img-wrap { height: 160px; }
-    .card-body { padding: 12px; }
-    .card-name { font-size: 14px; }
-    .card-price { font-size: 18px; }
-    .order-btn { padding: 10px; font-size: 12px; }
-    .admin-fab { bottom: 20px; right: 20px; width: 48px; height: 48px; font-size: 20px; }
-}
+            header { padding: 16px 20px; }
+            .logo { font-size: 20px; }
+            nav a { margin-left: 16px; font-size: 12px; }
+            .hero { padding: 60px 20px; }
+            .hero h1 { font-size: 36px; letter-spacing: 2px; }
+            .hero p { font-size: 15px; }
+            .categories { padding: 20px 16px; gap: 8px; }
+            .cat-btn { padding: 8px 14px; font-size: 11px; }
+            .products { padding: 40px 20px; }
+            .grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+            .card-img-wrap { height: 160px; }
+            .card-body { padding: 12px; }
+            .card-name { font-size: 14px; }
+            .card-price { font-size: 18px; }
+            .order-btn { padding: 10px; font-size: 12px; }
+            .admin-fab { bottom: 20px; right: 20px; width: 48px; height: 48px; font-size: 20px; }
+        }
         body { background: #0a0a0a; color: #fff; font-family: 'Arial', sans-serif; }
         header { background: #111; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; border-bottom: 2px solid #e63946; }
         .logo { font-size: 28px; font-weight: 900; color: #e63946; letter-spacing: 2px; }
@@ -34,15 +34,6 @@
         .hero h1 span { color: #e63946; }
         .hero p { font-size: 18px; color: #aaa; margin-top: 20px; animation: fadeUp 1s ease; }
         @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-        .hero { position: relative; overflow: hidden; min-height: 500px; display: flex; align-items: center; justify-content: center; }
-.slider { position: absolute; inset: 0; }
-.slide { position: absolute; inset: 0; background-size: cover; background-position: center; opacity: 0; transition: opacity 1s ease; }
-.slide.active { opacity: 1; }
-.hero-content { position: relative; z-index: 2; text-align: center; padding: 120px 40px; }
-.hero-content::before { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,0.5); z-index: -1; border-radius: 8px; }
-.slider-dots { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; z-index: 3; }
-.dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.4); cursor: pointer; transition: background 0.3s; }
-.dot.active { background: #e63946; }
         .categories { padding: 30px 40px; background: #111; display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; border-bottom: 1px solid #222; border-top: 1px solid #222; }
         .cat-btn { background: #1a1a1a; color: #fff; border: 1px solid #333; padding: 10px 24px; border-radius: 4px; cursor: pointer; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s; }
         .cat-btn:hover, .cat-btn.active { background: #e63946; border-color: #e63946; transform: translateY(-2px); }
@@ -83,7 +74,7 @@
         .admin-form.show { display: block; }
         .form-group { margin-bottom: 16px; }
         .form-group label { display: block; font-size: 12px; color: #aaa; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
-        .form-group input, .form-group select, .form-group textarea { width: 100%; background: #1a1a1a; border: 1px solid #333; color: #fff; padding: 12px; border-radius: 6px; font-size: 14px; outline: none; }
+        .form-group input, .form-group select { width: 100%; background: #1a1a1a; border: 1px solid #333; color: #fff; padding: 12px; border-radius: 6px; font-size: 14px; outline: none; }
         .form-group input:focus, .form-group select:focus { border-color: #e63946; }
         .form-group select option { background: #1a1a1a; }
         .img-preview { width: 100%; height: 150px; object-fit: cover; border-radius: 6px; margin-top: 8px; display: none; border: 1px solid #333; }
@@ -110,19 +101,9 @@
     </nav>
 </header>
 
-We Build Dreams<section class="hero">
-    <div class="slider">
-        <div class="slide active" style="background-image:url('https://drive.google.com/uc?export=view&id=1U_limNE3gbl5R9pqZ5kYYQs0yQEKDEj-')"></div>
-        <div class="slide" style="background-image:url('https://drive.google.com/uc?export=view&id=12wFrU7BLWKf8QjPeGmR6RLrX0BfP96f_')"></div>
-    </div>
-    <div class="hero-content">
-        <h1>BORN FOR <span>BMX</span></h1>
-        <p>Mongolia's #1 BMX Shop — We Build Dreams</p>
-    </div>
-    <div class="slider-dots">
-        <span class="dot active" onclick="goToSlide(0)"></span>
-        <span class="dot" onclick="goToSlide(1)"></span>
-    </div>
+<section class="hero">
+    <h1>BORN FOR <span>BMX</span></h1>
+    <p>Mongolia's #1 BMX Shop — We Build Dreams</p>
 </section>
 
 <div class="categories">
@@ -145,14 +126,14 @@ We Build Dreams<section class="hero">
 
 <footer>
     <div style="display:flex; justify-content:center; gap:24px; margin-bottom:20px;">
-    <a href="https://www.facebook.com/profile.php?id=108317618117337" target="_blank" style="color:#fff; font-size:28px; transition: color 0.3s;" onmouseover="this.style.color='#1877F2'" onmouseout="this.style.color='#fff'">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-    </a>
-    <a href="https://www.instagram.com/_born4ride" target="_blank" style="color:#fff; font-size:28px; transition: color 0.3s;" onmouseover="this.style.color='#E1306C'" onmouseout="this.style.color='#fff'">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-    </a>
-</div>
-<p>© 2026 <span>Born For BMX</span> — Mongolia's Premium BMX Shop</p>
+        <a href="https://www.facebook.com/profile.php?id=108317618117337" target="_blank" style="color:#fff; transition: color 0.3s;" onmouseover="this.style.color='#1877F2'" onmouseout="this.style.color='#fff'">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        </a>
+        <a href="https://www.instagram.com/_born4ride" target="_blank" style="color:#fff; transition: color 0.3s;" onmouseover="this.style.color='#E1306C'" onmouseout="this.style.color='#fff'">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+        </a>
+    </div>
+    <p>© 2026 <span>Born For BMX</span> — Mongolia's Premium BMX Shop</p>
 </footer>
 
 <button class="admin-fab" onclick="openAdmin()">⚙</button>
@@ -249,7 +230,7 @@ We Build Dreams<section class="hero">
         `).join('');
     }
 
-    async function renderAdminList() {
+    function renderAdminList() {
         document.getElementById('adminProductList').innerHTML = products.map(p => `
             <div class="admin-product-item">
                 <img src="${p.img || 'https://placehold.co/50x50/1a1a1a/e63946?text=?'}" onerror="this.src='https://placehold.co/50x50/1a1a1a/e63946?text=?'">
@@ -314,24 +295,6 @@ We Build Dreams<section class="hero">
         const { error } = await sb.from('products').insert([{ name, price, cat, img, desc }]);
         if (error) { alert('Алдаа гарлаа!'); console.error(error); return; }
         await loadProducts();
-        // SLIDER
-let currentSlide = 0;
-const slides = document.querySelectorAll('.slide');
-const dots = document.querySelectorAll('.dot');
-
-function goToSlide(n) {
-    slides[currentSlide].classList.remove('active');
-    dots[currentSlide].classList.remove('active');
-    currentSlide = n;
-    slides[currentSlide].classList.add('active');
-    dots[currentSlide].classList.add('active');
-}
-
-function nextSlide() {
-    goToSlide((currentSlide + 1) % slides.length);
-}
-
-setInterval(nextSlide, 4000);
         renderAdminList();
         document.getElementById('prodName').value = '';
         document.getElementById('prodPrice').value = '';
