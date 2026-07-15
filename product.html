@@ -81,10 +81,10 @@
         if (!productId) { window.location.href = '/'; return; }
         const { data, error } = await sb.from('products').select('*').eq('id', productId).single();
         if (error || !data) { window.location.href = '/'; return; }
-        renderProduct(data);
+        <button class="order-btn" onclick="copyAndOpen('${p.name}', '${p.price}')">💬 Захиалах</button>(data);
     }
 
-    function renderProduct(p) {
+    function <button class="order-btn" onclick="copyAndOpen('${p.name}', '${p.price}')">💬 Захиалах</button>(p) {
         const imgs = [p.img, p.img2, p.img3].filter(Boolean);
         const placeholder = 'https://placehold.co/600x400/1a1a1a/e63946?text=No+Image';
         const msg = encodeURIComponent(`Сайн байна уу! "${p.name}" (${p.price}) захиалмаар байна.`);
@@ -110,7 +110,15 @@
             </div>
         `;
     }
-
+function copyAndOpen(name, price) {
+    const msg = `Сайн байна уу! "${name}" (${price}) захиалмаар байна.`;
+    navigator.clipboard.writeText(msg).then(() => {
+        alert('✅ Мессеж хуулагдлаа!\n\nMessenger нээгдэнэ — paste хийгээд явуулна уу (Ctrl+V / Cmd+V)');
+        window.open('https://m.me/108317618117337', '_blank');
+    }).catch(() => {
+        window.open(`https://m.me/108317618117337?text=${encodeURIComponent(msg)}`, '_blank');
+    });
+}
     function changeImg(src, el) {
         document.getElementById('mainImg').src = src;
         document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
