@@ -207,6 +207,16 @@
         renderProducts();
     }
 
+    function copyAndOrder(name, price) {
+        const msg = `Сайн байна уу! "${name}" (${price}) захиалмаар байна.`;
+        navigator.clipboard.writeText(msg).then(() => {
+            alert('✅ Мессеж хуулагдлаа!\n\nMessenger нээгдэнэ — paste хийгээд явуулна уу');
+            window.open('https://m.me/108317618117337', '_blank');
+        }).catch(() => {
+            window.open(`https://m.me/108317618117337?text=${encodeURIComponent(msg)}`, '_blank');
+        });
+    }
+
     function renderProducts() {
         const grid = document.getElementById('productGrid');
         grid.innerHTML = '';
@@ -232,8 +242,7 @@
             `;
             card.querySelector('.order-btn').addEventListener('click', (e) => {
                 e.stopPropagation();
-                const msg = encodeURIComponent(`Сайн байна уу! "${p.name}" (${p.price}) захиалмаар байна.`);
-                window.open(`https://m.me/108317618117337?text=${msg}`, '_blank');
+                copyAndOrder(p.name, p.price);
             });
             card.addEventListener('click', () => {
                 window.location.href = `/product.html?id=${p.id}`;
