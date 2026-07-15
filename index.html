@@ -6,24 +6,6 @@
     <title>Born For BMX</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        @media (max-width: 768px) {
-            header { padding: 16px 20px; }
-            .logo { font-size: 20px; }
-            nav a { margin-left: 16px; font-size: 12px; }
-            .hero { padding: 60px 20px; }
-            .hero h1 { font-size: 36px; letter-spacing: 2px; }
-            .hero p { font-size: 15px; }
-            .categories { padding: 20px 16px; gap: 8px; }
-            .cat-btn { padding: 8px 14px; font-size: 11px; }
-            .products { padding: 40px 20px; }
-            .grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-            .card-img-wrap { height: 160px; }
-            .card-body { padding: 12px; }
-            .card-name { font-size: 14px; }
-            .card-price { font-size: 18px; }
-            .order-btn { padding: 10px; font-size: 12px; }
-            .admin-fab { bottom: 20px; right: 20px; width: 48px; height: 48px; font-size: 20px; }
-        }
         body { background: #0a0a0a; color: #fff; font-family: 'Arial', sans-serif; }
         header { background: #111; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; border-bottom: 2px solid #e63946; }
         .logo { font-size: 28px; font-weight: 900; color: #e63946; letter-spacing: 2px; }
@@ -89,6 +71,27 @@
         footer { background: #111; border-top: 2px solid #e63946; padding: 40px; text-align: center; color: #666; font-size: 13px; margin-top: 40px; }
         footer span { color: #e63946; }
         .loading { text-align: center; padding: 40px; color: #666; grid-column: 1/-1; }
+
+        @media (max-width: 768px) {
+            header { padding: 16px 20px; }
+            .logo { font-size: 20px; }
+            nav a { margin-left: 16px; font-size: 12px; }
+            .hero { padding: 60px 20px; }
+            .hero h1 { font-size: 36px; letter-spacing: 2px; }
+            .hero p { font-size: 15px; }
+            .categories { padding: 20px 16px; gap: 8px; }
+            .cat-btn { padding: 8px 14px; font-size: 11px; }
+            .products { padding: 30px 12px; }
+            .products h2 { font-size: 24px; margin-bottom: 20px; }
+            .grid { grid-template-columns: repeat(2, 1fr) !important; gap: 10px; }
+            .card-img-wrap { height: 130px; }
+            .card-body { padding: 10px; }
+            .card-cat { font-size: 9px; margin-bottom: 4px; }
+            .card-name { font-size: 12px; margin-bottom: 4px; }
+            .card-price { font-size: 14px; margin-bottom: 8px; }
+            .order-btn { padding: 8px; font-size: 11px; }
+            .admin-fab { bottom: 20px; right: 20px; width: 48px; height: 48px; font-size: 20px; }
+        }
     </style>
 </head>
 <body>
