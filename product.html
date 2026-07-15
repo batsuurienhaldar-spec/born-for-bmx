@@ -108,7 +108,7 @@
                 <div class="product-price">${p.price}</div>
                 ${p.desc ? `<div class="product-desc">${p.desc}</div>` : ''}
                 ${p.desc2 ? `<hr class="divider"><div class="product-desc">${p.desc2}</div>` : ''}
-                <button class="order-btn" onclick="orderFB('${p.name}', '${p.price}')">💬 Захиалах</button>
+                <button class="order-btn" id="orderBtn">💬 Захиалах</button>
             </div>
         `;
     }
