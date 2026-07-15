@@ -22,7 +22,7 @@
         .product-name { font-size: 32px; font-weight: 900; margin-bottom: 16px; line-height: 1.2; }
         .product-price { font-size: 36px; font-weight: 900; color: #e63946; margin-bottom: 24px; }
         .product-desc { color: #aaa; font-size: 15px; line-height: 1.8; margin-bottom: 32px; white-space: pre-line; }
-        .order-btn { width: 100%; background: #e63946; color: #fff; border: none; padding: 16px; font-size: 16px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; border-radius: 6px; transition: all 0.3s; }
+        .order-btn { width: 100%; background: #e63946; color: #fff; border: none; padding: 16px; font-size: 16px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; border-radius: 6px; transition: all 0.3s; display: block; text-align: center; text-decoration: none; box-sizing: border-box; }
         .order-btn:hover { background: #c1121f; transform: scale(1.01); }
         .divider { border: none; border-top: 1px solid #222; margin: 24px 0; }
         .loading { text-align: center; padding: 80px; color: #444; }
@@ -77,19 +77,18 @@
     const params = new URLSearchParams(window.location.search);
     const productId = params.get('id');
 
-    let currentProduct = null;
-
     async function loadProduct() {
         if (!productId) { window.location.href = '/'; return; }
         const { data, error } = await sb.from('products').select('*').eq('id', productId).single();
         if (error || !data) { window.location.href = '/'; return; }
-        currentProduct = data;
         renderProduct(data);
     }
 
     function renderProduct(p) {
         const imgs = [p.img, p.img2, p.img3].filter(Boolean);
         const placeholder = 'https://placehold.co/600x400/1a1a1a/e63946?text=No+Image';
+        const msg = encodeURIComponent(`Сайн байна уу! "${p.name}" (${p.price}) захиалмаар байна.`);
+        const messengerLink = `https://m.me/108317618117337?text=${msg}`;
         document.title = `${p.name} — Born For BMX`;
         document.getElementById('productContainer').innerHTML = `
             <div class="product-images">
@@ -107,15 +106,9 @@
                 <div class="product-price">${p.price}</div>
                 ${p.desc ? `<div class="product-desc">${p.desc}</div>` : ''}
                 ${p.desc2 ? `<hr class="divider"><div class="product-desc">${p.desc2}</div>` : ''}
-                <button class="order-btn" onclick="doOrder()">💬 Захиалах</button>
+                <a class="order-btn" href="${messengerLink}" target="_blank">💬 Захиалах</a>
             </div>
         `;
-    }
-
-    function doOrder() {
-        if (!currentProduct) return;
-        const msg = encodeURIComponent(`Сайн байна уу! "${currentProduct.name}" (${currentProduct.price}) захиалмаар байна.`);
-        window.open(`https://www.facebook.com/messages/t/108317618117337/?text=${msg}`, '_blank');
     }
 
     function changeImg(src, el) {
