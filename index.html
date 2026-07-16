@@ -11,6 +11,12 @@
         .logo { font-size: 28px; font-weight: 900; color: #e63946; letter-spacing: 2px; }
         nav a { color: #fff; text-decoration: none; margin-left: 30px; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s; }
         nav a:hover { color: #e63946; }
+        .search-wrap { display: flex; align-items: center; gap: 8px; }
+        .search-input { background: #1a1a1a; border: 1px solid #333; color: #fff; padding: 8px 14px; border-radius: 20px; font-size: 13px; outline: none; width: 200px; transition: all 0.3s; }
+        .search-input:focus { border-color: #e63946; width: 260px; }
+        .search-input::placeholder { color: #555; }
+        .search-clear { background: none; border: none; color: #555; cursor: pointer; font-size: 16px; padding: 0 4px; display: none; }
+        .search-badge { background: #e63946; color: #fff; font-size: 11px; padding: 2px 8px; border-radius: 10px; margin-left: 8px; display: none; }
         .hero { background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%); padding: 120px 40px; text-align: center; }
         .hero h1 { font-size: 72px; font-weight: 900; text-transform: uppercase; letter-spacing: 6px; animation: fadeUp 0.8s ease; }
         .hero h1 span { color: #e63946; }
@@ -115,6 +121,10 @@
         <a href="#">Home</a>
         <a href="#">Shop</a>
     </nav>
+    <div class="search-wrap">
+        <input class="search-input" id="searchInput" type="text" placeholder="🔍 Хайх..." oninput="searchProducts()">
+        <button class="search-clear" id="searchClear" onclick="clearSearch()">✕</button>
+    </div>
 </header>
 
 <section class="hero">
@@ -299,6 +309,14 @@
         if (currentSubcat !== 'all') {
             filtered = filtered.filter(p => p.subcat === currentSubcat);
         }
+        if (searchQuery) {
+            filtered = filtered.filter(p =>
+                (p.name || '').toLowerCase().includes(searchQuery) ||
+                (p.desc || '').toLowerCase().includes(searchQuery) ||
+                (p.cat || '').toLowerCase().includes(searchQuery) ||
+                (p.subcat || '').toLowerCase().includes(searchQuery)
+            );
+        }
         if (filtered.length === 0) {
             grid.innerHTML = '<div class="empty"><p>Бүтээгдэхүүн байхгүй байна</p></div>';
             return;
@@ -460,6 +478,21 @@
     document.getElementById('adminModal').addEventListener('click', function(e) {
         if (e.target === this) closeAdmin();
     });
+
+    let searchQuery = '';
+
+    function searchProducts() {
+        searchQuery = document.getElementById('searchInput').value.toLowerCase().trim();
+        document.getElementById('searchClear').style.display = searchQuery ? 'block' : 'none';
+        renderProducts();
+    }
+
+    function clearSearch() {
+        document.getElementById('searchInput').value = '';
+        searchQuery = '';
+        document.getElementById('searchClear').style.display = 'none';
+        renderProducts();
+    }
 
     loadProducts();
 </script>
