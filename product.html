@@ -102,7 +102,7 @@
                 </div>` : ''}
             </div>
             <div class="product-info">
-                <div class="product-cat">${CATS[p.cat] || p.cat}</div>
+                <div class="product-cat">${CATS[p.cat] || p.cat}${p.subcat ? ' — ' + p.subcat : ''}</div>
                 <div class="product-name">${p.name}</div>
                 <div class="product-price">${p.price}</div>
                 ${p.desc ? `<div class="product-desc">${p.desc}</div>` : ''}
