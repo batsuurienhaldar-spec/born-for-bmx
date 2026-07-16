@@ -16,9 +16,15 @@
         .hero h1 span { color: #e63946; }
         .hero p { font-size: 18px; color: #aaa; margin-top: 20px; animation: fadeUp 1s ease; }
         @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-        .categories { padding: 30px 40px; background: #111; display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; border-bottom: 1px solid #222; border-top: 1px solid #222; }
-        .cat-btn { background: #1a1a1a; color: #fff; border: 1px solid #333; padding: 10px 24px; border-radius: 4px; cursor: pointer; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s; }
+        .categories { padding: 20px 40px; background: #111; border-bottom: 1px solid #222; border-top: 1px solid #222; }
+        .cat-row { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-bottom: 8px; }
+        .cat-row:last-child { margin-bottom: 0; }
+        .cat-btn { background: #1a1a1a; color: #fff; border: 1px solid #333; padding: 8px 18px; border-radius: 4px; cursor: pointer; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s; }
         .cat-btn:hover, .cat-btn.active { background: #e63946; border-color: #e63946; transform: translateY(-2px); }
+        .subcat-row { display: none; gap: 8px; flex-wrap: wrap; justify-content: center; padding: 8px 0; border-top: 1px solid #222; margin-top: 8px; }
+        .subcat-row.show { display: flex; }
+        .subcat-btn { background: #0a0a0a; color: #aaa; border: 1px solid #222; padding: 6px 14px; border-radius: 4px; cursor: pointer; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s; }
+        .subcat-btn:hover, .subcat-btn.active { background: #333; border-color: #e63946; color: #fff; }
         .products { padding: 60px 40px; }
         .products h2 { font-size: 32px; font-weight: 900; text-transform: uppercase; margin-bottom: 40px; letter-spacing: 2px; }
         .products h2 span { color: #e63946; }
@@ -70,9 +76,9 @@
         .admin-product-info strong { display: block; font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .admin-product-info span { font-size: 11px; color: #e63946; }
         .admin-btns { display: flex; gap: 6px; flex-shrink: 0; }
-        .edit-btn { background: #1a3a5c; color: #fff; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; font-size: 12px; transition: background 0.2s; }
+        .edit-btn { background: #1a3a5c; color: #fff; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; font-size: 12px; }
         .edit-btn:hover { background: #2a6496; }
-        .delete-btn { background: #333; color: #fff; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; font-size: 12px; transition: background 0.2s; }
+        .delete-btn { background: #333; color: #fff; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; font-size: 12px; }
         .delete-btn:hover { background: #e63946; }
         .btn-cancel { width: 100%; background: #1a1a1a; color: #666; border: 1px solid #333; padding: 12px; border-radius: 6px; cursor: pointer; font-size: 14px; margin-top: 8px; }
         footer { background: #111; border-top: 2px solid #e63946; padding: 40px; text-align: center; color: #666; font-size: 13px; margin-top: 40px; }
@@ -85,8 +91,9 @@
             .hero { padding: 60px 20px; }
             .hero h1 { font-size: 36px; letter-spacing: 2px; }
             .hero p { font-size: 15px; }
-            .categories { padding: 20px 16px; gap: 8px; }
-            .cat-btn { padding: 8px 14px; font-size: 11px; }
+            .categories { padding: 16px; }
+            .cat-btn { padding: 6px 12px; font-size: 10px; }
+            .subcat-btn { padding: 5px 10px; font-size: 10px; }
             .products { padding: 30px 12px; }
             .products h2 { font-size: 24px; margin-bottom: 20px; }
             .grid { grid-template-columns: repeat(2, 1fr) !important; gap: 10px; }
@@ -116,16 +123,19 @@
 </section>
 
 <div class="categories">
-    <button class="cat-btn active" onclick="filterCat('all', this)">All</button>
-    <button class="cat-btn" onclick="filterCat('complete', this)">Complete Bikes</button>
-    <button class="cat-btn" onclick="filterCat('frames', this)">Frames & Forks</button>
-    <button class="cat-btn" onclick="filterCat('steering', this)">Steering</button>
-    <button class="cat-btn" onclick="filterCat('wheels', this)">Wheels & Tires</button>
-    <button class="cat-btn" onclick="filterCat('drivetrain', this)">Drivetrain</button>
-    <button class="cat-btn" onclick="filterCat('grind', this)">Grind</button>
-    <button class="cat-btn" onclick="filterCat('brakes', this)">Brakes</button>
-    <button class="cat-btn" onclick="filterCat('seat', this)">Seat & Post</button>
-    <button class="cat-btn" onclick="filterCat('other', this)">Other</button>
+    <div class="cat-row">
+        <button class="cat-btn active" onclick="filterCat('all', this)">All</button>
+        <button class="cat-btn" onclick="filterCat('complete', this)">Complete Bikes</button>
+        <button class="cat-btn" onclick="filterCat('frames', this)">Frames & Forks</button>
+        <button class="cat-btn" onclick="filterCat('steering', this)">Steering</button>
+        <button class="cat-btn" onclick="filterCat('wheels', this)">Wheels & Tires</button>
+        <button class="cat-btn" onclick="filterCat('drivetrain', this)">Drivetrain</button>
+        <button class="cat-btn" onclick="filterCat('grind', this)">Grind</button>
+        <button class="cat-btn" onclick="filterCat('brakes', this)">Brakes</button>
+        <button class="cat-btn" onclick="filterCat('seat', this)">Seat & Post</button>
+        <button class="cat-btn" onclick="filterCat('other', this)">Other</button>
+    </div>
+    <div class="subcat-row" id="subcatRow"></div>
 </div>
 
 <section class="products">
@@ -166,7 +176,7 @@
             </div>
             <div class="form-group">
                 <label>Category</label>
-                <select id="prodCat">
+                <select id="prodCat" onchange="updateSubcatSelect()">
                     <option value="complete">Complete Bikes</option>
                     <option value="frames">Frames & Forks</option>
                     <option value="steering">Steering</option>
@@ -177,6 +187,10 @@
                     <option value="seat">Seat & Post</option>
                     <option value="other">Other</option>
                 </select>
+            </div>
+            <div class="form-group" id="subcatGroup" style="display:none;">
+                <label>Sub-category</label>
+                <select id="prodSubcat"></select>
             </div>
             <div class="form-group">
                 <label>Зургийн URL</label>
@@ -189,7 +203,6 @@
             </div>
             <button class="btn-red" id="submitBtn" onclick="submitProduct()">+ Бүтээгдэхүүн нэмэх</button>
             <button class="btn-cancel" id="cancelBtn" style="display:none;" onclick="cancelEdit()">Цуцлах</button>
-
             <div class="admin-products">
                 <h3 style="margin-bottom:12px; color:#aaa; font-size:14px; text-transform:uppercase;">Бүтээгдэхүүнүүд</h3>
                 <div class="admin-filter">
@@ -220,8 +233,18 @@
     const ADMIN_PASSWORD = 'bmx2026';
     const CATS = { complete:'Complete Bikes', frames:'Frames & Forks', steering:'Steering', wheels:'Wheels & Tires', drivetrain:'Drivetrain', grind:'Grind', brakes:'Brakes', seat:'Seat & Post', other:'Other' };
 
+    const SUBCATS = {
+        frames: ['Frame', 'Fork'],
+        wheels: ['Hub', 'Rim', 'Tire'],
+        steering: ['Handlebar', 'Stem', 'Headset', 'Grip'],
+        drivetrain: ['Crank', 'Sprocket', 'Chain', 'Pedal', 'BB'],
+        seat: ['Seat', 'Post'],
+        complete: [], grind: [], brakes: [], other: []
+    };
+
     let products = [];
     let currentCat = 'all';
+    let currentSubcat = 'all';
     let adminCat = 'all';
     let editingId = null;
 
@@ -242,10 +265,40 @@
         });
     }
 
+    function filterCat(cat, btn) {
+        currentCat = cat;
+        currentSubcat = 'all';
+        document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const subcatRow = document.getElementById('subcatRow');
+        const subs = SUBCATS[cat] || [];
+        if (subs.length > 0) {
+            subcatRow.innerHTML = `
+                <button class="subcat-btn active" onclick="filterSubcat('all', this)">All</button>
+                ${subs.map(s => `<button class="subcat-btn" onclick="filterSubcat('${s}', this)">${s}</button>`).join('')}
+            `;
+            subcatRow.classList.add('show');
+        } else {
+            subcatRow.classList.remove('show');
+            subcatRow.innerHTML = '';
+        }
+        renderProducts();
+    }
+
+    function filterSubcat(subcat, btn) {
+        currentSubcat = subcat;
+        document.querySelectorAll('.subcat-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderProducts();
+    }
+
     function renderProducts() {
         const grid = document.getElementById('productGrid');
         grid.innerHTML = '';
-        const filtered = currentCat === 'all' ? products : products.filter(p => p.cat === currentCat);
+        let filtered = currentCat === 'all' ? products : products.filter(p => p.cat === currentCat);
+        if (currentSubcat !== 'all') {
+            filtered = filtered.filter(p => p.subcat === currentSubcat);
+        }
         if (filtered.length === 0) {
             grid.innerHTML = '<div class="empty"><p>Бүтээгдэхүүн байхгүй байна</p></div>';
             return;
@@ -259,7 +312,7 @@
                     ${p.desc ? `<div class="tooltip">${p.desc}</div>` : ''}
                 </div>
                 <div class="card-body">
-                    <div class="card-cat">${CATS[p.cat] || p.cat}</div>
+                    <div class="card-cat">${CATS[p.cat] || p.cat}${p.subcat ? ' — ' + p.subcat : ''}</div>
                     <div class="card-name">${p.name}</div>
                     <div class="card-price">${p.price}</div>
                     <button class="order-btn">💬 Захиалах</button>
@@ -276,6 +329,19 @@
         });
     }
 
+    function updateSubcatSelect() {
+        const cat = document.getElementById('prodCat').value;
+        const subs = SUBCATS[cat] || [];
+        const group = document.getElementById('subcatGroup');
+        const select = document.getElementById('prodSubcat');
+        if (subs.length > 0) {
+            select.innerHTML = `<option value="">— Сонгох —</option>` + subs.map(s => `<option value="${s}">${s}</option>`).join('');
+            group.style.display = 'block';
+        } else {
+            group.style.display = 'none';
+        }
+    }
+
     function filterAdmin(cat, btn) {
         adminCat = cat;
         document.querySelectorAll('.admin-filter-btn').forEach(b => b.classList.remove('active'));
@@ -290,7 +356,7 @@
                 <img src="${p.img || 'https://placehold.co/50x50/1a1a1a/e63946?text=?'}" onerror="this.src='https://placehold.co/50x50/1a1a1a/e63946?text=?'">
                 <div class="admin-product-info">
                     <strong>${p.name}</strong>
-                    <span>${p.price} — ${CATS[p.cat] || p.cat}</span>
+                    <span>${p.price} — ${CATS[p.cat] || p.cat}${p.subcat ? ' / ' + p.subcat : ''}</span>
                 </div>
                 <div class="admin-btns">
                     <button class="edit-btn" onclick="startEdit(${p.id})">✏️</button>
@@ -309,10 +375,9 @@
         document.getElementById('prodCat').value = p.cat || 'complete';
         document.getElementById('prodImg').value = p.img || '';
         document.getElementById('prodDesc').value = p.desc || '';
-        if (p.img) {
-            document.getElementById('imgPreview').src = p.img;
-            document.getElementById('imgPreview').style.display = 'block';
-        }
+        updateSubcatSelect();
+        if (p.subcat) document.getElementById('prodSubcat').value = p.subcat;
+        if (p.img) { document.getElementById('imgPreview').src = p.img; document.getElementById('imgPreview').style.display = 'block'; }
         document.getElementById('submitBtn').textContent = '✅ Хадгалах';
         document.getElementById('cancelBtn').style.display = 'block';
         document.getElementById('formTitle').textContent = '✏️ Засах';
@@ -329,6 +394,7 @@
         document.getElementById('submitBtn').textContent = '+ Бүтээгдэхүүн нэмэх';
         document.getElementById('cancelBtn').style.display = 'none';
         document.getElementById('formTitle').textContent = 'Бүтээгдэхүүний нэр';
+        document.getElementById('subcatGroup').style.display = 'none';
     }
 
     async function submitProduct() {
@@ -337,26 +403,18 @@
         const cat = document.getElementById('prodCat').value;
         const img = document.getElementById('prodImg').value.trim();
         const desc = document.getElementById('prodDesc').value.trim();
+        const subcat = document.getElementById('prodSubcat').value || null;
         if (!name || !price) { alert('Нэр болон үнэ оруулна уу!'); return; }
-
         if (editingId) {
-            const { error } = await sb.from('products').update({ name, price, cat, img, desc }).eq('id', editingId);
-            if (error) { alert('Алдаа гарлаа!'); console.error(error); return; }
+            const { error } = await sb.from('products').update({ name, price, cat, img, desc, subcat }).eq('id', editingId);
+            if (error) { alert('Алдаа гарлаа!'); return; }
         } else {
-            const { error } = await sb.from('products').insert([{ name, price, cat, img, desc }]);
-            if (error) { alert('Алдаа гарлаа!'); console.error(error); return; }
+            const { error } = await sb.from('products').insert([{ name, price, cat, img, desc, subcat }]);
+            if (error) { alert('Алдаа гарлаа!'); return; }
         }
-
         cancelEdit();
         await loadProducts();
         renderAdminList();
-    }
-
-    function filterCat(cat, btn) {
-        currentCat = cat;
-        document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        renderProducts();
     }
 
     function openAdmin() {
@@ -377,6 +435,7 @@
         if (pw === ADMIN_PASSWORD) {
             document.getElementById('loginForm').style.display = 'none';
             document.getElementById('adminForm').classList.add('show');
+            updateSubcatSelect();
             renderAdminList();
         } else {
             document.getElementById('errorMsg').style.display = 'block';
