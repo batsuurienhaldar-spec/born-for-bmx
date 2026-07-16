@@ -61,17 +61,23 @@
         .form-group select option { background: #1a1a1a; }
         .img-preview { width: 100%; height: 150px; object-fit: cover; border-radius: 6px; margin-top: 8px; display: none; border: 1px solid #333; }
         .admin-products { margin-top: 30px; border-top: 1px solid #222; padding-top: 20px; }
+        .admin-filter { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+        .admin-filter-btn { background: #1a1a1a; color: #aaa; border: 1px solid #333; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 11px; text-transform: uppercase; transition: all 0.2s; }
+        .admin-filter-btn:hover, .admin-filter-btn.active { background: #e63946; border-color: #e63946; color: #fff; }
         .admin-product-item { display: flex; align-items: center; gap: 12px; padding: 12px; background: #1a1a1a; border-radius: 6px; margin-bottom: 8px; border: 1px solid #222; }
-        .admin-product-item img { width: 50px; height: 50px; object-fit: cover; border-radius: 4px; }
-        .admin-product-info { flex: 1; }
-        .admin-product-info strong { display: block; font-size: 14px; }
-        .admin-product-info span { font-size: 12px; color: #e63946; }
-        .delete-btn { background: #333; color: #fff; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; transition: background 0.2s; }
+        .admin-product-item img { width: 50px; height: 50px; object-fit: cover; border-radius: 4px; flex-shrink: 0; }
+        .admin-product-info { flex: 1; min-width: 0; }
+        .admin-product-info strong { display: block; font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .admin-product-info span { font-size: 11px; color: #e63946; }
+        .admin-btns { display: flex; gap: 6px; flex-shrink: 0; }
+        .edit-btn { background: #1a3a5c; color: #fff; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; font-size: 12px; transition: background 0.2s; }
+        .edit-btn:hover { background: #2a6496; }
+        .delete-btn { background: #333; color: #fff; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; font-size: 12px; transition: background 0.2s; }
         .delete-btn:hover { background: #e63946; }
+        .btn-cancel { width: 100%; background: #1a1a1a; color: #666; border: 1px solid #333; padding: 12px; border-radius: 6px; cursor: pointer; font-size: 14px; margin-top: 8px; }
         footer { background: #111; border-top: 2px solid #e63946; padding: 40px; text-align: center; color: #666; font-size: 13px; margin-top: 40px; }
         footer span { color: #e63946; }
         .loading { text-align: center; padding: 40px; color: #666; grid-column: 1/-1; }
-
         @media (max-width: 768px) {
             header { padding: 16px 20px; }
             .logo { font-size: 20px; }
@@ -146,12 +152,12 @@
         <h2>🔐 Admin Panel</h2>
         <div class="login-form" id="loginForm">
             <p class="error-msg" id="errorMsg">Нууц үг буруу байна!</p>
-            <input type="password" id="passwordInput" placeholder="Нууц үг оруулна уу" onkeydown="if(event.key==='Enter')checkPassword()">
+            <input type="password" id="passwordInput" autocomplete="current-password" placeholder="Нууц үг оруулна уу" onkeydown="if(event.key==='Enter')checkPassword()">
             <button class="btn-red" onclick="checkPassword()">Нэвтрэх</button>
         </div>
         <div class="admin-form" id="adminForm">
             <div class="form-group">
-                <label>Бүтээгдэхүүний нэр</label>
+                <label id="formTitle">Бүтээгдэхүүний нэр</label>
                 <input type="text" id="prodName" placeholder="жнь: Haro Leucadia 24">
             </div>
             <div class="form-group">
@@ -181,9 +187,23 @@
                 <label>Тайлбар (заавал биш)</label>
                 <input type="text" id="prodDesc" placeholder="жнь: Chromoly frame, 20 inch">
             </div>
-            <button class="btn-red" onclick="addProduct()">+ Бүтээгдэхүүн нэмэх</button>
+            <button class="btn-red" id="submitBtn" onclick="submitProduct()">+ Бүтээгдэхүүн нэмэх</button>
+            <button class="btn-cancel" id="cancelBtn" style="display:none;" onclick="cancelEdit()">Цуцлах</button>
+
             <div class="admin-products">
-                <h3 style="margin-bottom:16px; color:#aaa; font-size:14px; text-transform:uppercase;">Бүтээгдэхүүнүүд</h3>
+                <h3 style="margin-bottom:12px; color:#aaa; font-size:14px; text-transform:uppercase;">Бүтээгдэхүүнүүд</h3>
+                <div class="admin-filter">
+                    <button class="admin-filter-btn active" onclick="filterAdmin('all', this)">Бүгд</button>
+                    <button class="admin-filter-btn" onclick="filterAdmin('complete', this)">Complete</button>
+                    <button class="admin-filter-btn" onclick="filterAdmin('frames', this)">Frames</button>
+                    <button class="admin-filter-btn" onclick="filterAdmin('steering', this)">Steering</button>
+                    <button class="admin-filter-btn" onclick="filterAdmin('wheels', this)">Wheels</button>
+                    <button class="admin-filter-btn" onclick="filterAdmin('drivetrain', this)">Drivetrain</button>
+                    <button class="admin-filter-btn" onclick="filterAdmin('grind', this)">Grind</button>
+                    <button class="admin-filter-btn" onclick="filterAdmin('brakes', this)">Brakes</button>
+                    <button class="admin-filter-btn" onclick="filterAdmin('seat', this)">Seat</button>
+                    <button class="admin-filter-btn" onclick="filterAdmin('other', this)">Other</button>
+                </div>
                 <div id="adminProductList"></div>
             </div>
             <button onclick="closeAdmin()" style="width:100%;margin-top:20px;background:#1a1a1a;color:#666;border:1px solid #333;padding:12px;border-radius:6px;cursor:pointer;">Хаах</button>
@@ -202,6 +222,8 @@
 
     let products = [];
     let currentCat = 'all';
+    let adminCat = 'all';
+    let editingId = null;
 
     async function loadProducts() {
         const { data, error } = await sb.from('products').select('*').order('id', { ascending: false });
@@ -254,17 +276,80 @@
         });
     }
 
+    function filterAdmin(cat, btn) {
+        adminCat = cat;
+        document.querySelectorAll('.admin-filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderAdminList();
+    }
+
     function renderAdminList() {
-        document.getElementById('adminProductList').innerHTML = products.map(p => `
+        const filtered = adminCat === 'all' ? products : products.filter(p => p.cat === adminCat);
+        document.getElementById('adminProductList').innerHTML = filtered.map(p => `
             <div class="admin-product-item">
                 <img src="${p.img || 'https://placehold.co/50x50/1a1a1a/e63946?text=?'}" onerror="this.src='https://placehold.co/50x50/1a1a1a/e63946?text=?'">
                 <div class="admin-product-info">
                     <strong>${p.name}</strong>
                     <span>${p.price} — ${CATS[p.cat] || p.cat}</span>
                 </div>
-                <button class="delete-btn" onclick="deleteProduct(${p.id})">Устгах</button>
+                <div class="admin-btns">
+                    <button class="edit-btn" onclick="startEdit(${p.id})">✏️</button>
+                    <button class="delete-btn" onclick="deleteProduct(${p.id})">🗑️</button>
+                </div>
             </div>
         `).join('') || '<p style="color:#444;font-size:13px;">Бүтээгдэхүүн байхгүй</p>';
+    }
+
+    function startEdit(id) {
+        const p = products.find(x => x.id === id);
+        if (!p) return;
+        editingId = id;
+        document.getElementById('prodName').value = p.name || '';
+        document.getElementById('prodPrice').value = p.price || '';
+        document.getElementById('prodCat').value = p.cat || 'complete';
+        document.getElementById('prodImg').value = p.img || '';
+        document.getElementById('prodDesc').value = p.desc || '';
+        if (p.img) {
+            document.getElementById('imgPreview').src = p.img;
+            document.getElementById('imgPreview').style.display = 'block';
+        }
+        document.getElementById('submitBtn').textContent = '✅ Хадгалах';
+        document.getElementById('cancelBtn').style.display = 'block';
+        document.getElementById('formTitle').textContent = '✏️ Засах';
+        document.querySelector('.modal').scrollTop = 0;
+    }
+
+    function cancelEdit() {
+        editingId = null;
+        document.getElementById('prodName').value = '';
+        document.getElementById('prodPrice').value = '';
+        document.getElementById('prodImg').value = '';
+        document.getElementById('prodDesc').value = '';
+        document.getElementById('imgPreview').style.display = 'none';
+        document.getElementById('submitBtn').textContent = '+ Бүтээгдэхүүн нэмэх';
+        document.getElementById('cancelBtn').style.display = 'none';
+        document.getElementById('formTitle').textContent = 'Бүтээгдэхүүний нэр';
+    }
+
+    async function submitProduct() {
+        const name = document.getElementById('prodName').value.trim();
+        const price = document.getElementById('prodPrice').value.trim();
+        const cat = document.getElementById('prodCat').value;
+        const img = document.getElementById('prodImg').value.trim();
+        const desc = document.getElementById('prodDesc').value.trim();
+        if (!name || !price) { alert('Нэр болон үнэ оруулна уу!'); return; }
+
+        if (editingId) {
+            const { error } = await sb.from('products').update({ name, price, cat, img, desc }).eq('id', editingId);
+            if (error) { alert('Алдаа гарлаа!'); console.error(error); return; }
+        } else {
+            const { error } = await sb.from('products').insert([{ name, price, cat, img, desc }]);
+            if (error) { alert('Алдаа гарлаа!'); console.error(error); return; }
+        }
+
+        cancelEdit();
+        await loadProducts();
+        renderAdminList();
     }
 
     function filterCat(cat, btn) {
@@ -284,6 +369,7 @@
 
     function closeAdmin() {
         document.getElementById('adminModal').classList.remove('open');
+        cancelEdit();
     }
 
     function checkPassword() {
@@ -302,24 +388,6 @@
         const preview = document.getElementById('imgPreview');
         if (url) { preview.src = url; preview.style.display = 'block'; }
         else { preview.style.display = 'none'; }
-    }
-
-    async function addProduct() {
-        const name = document.getElementById('prodName').value.trim();
-        const price = document.getElementById('prodPrice').value.trim();
-        const cat = document.getElementById('prodCat').value;
-        const img = document.getElementById('prodImg').value.trim();
-        const desc = document.getElementById('prodDesc').value.trim();
-        if (!name || !price) { alert('Нэр болон үнэ оруулна уу!'); return; }
-        const { error } = await sb.from('products').insert([{ name, price, cat, img, desc }]);
-        if (error) { alert('Алдаа гарлаа!'); console.error(error); return; }
-        await loadProducts();
-        renderAdminList();
-        document.getElementById('prodName').value = '';
-        document.getElementById('prodPrice').value = '';
-        document.getElementById('prodImg').value = '';
-        document.getElementById('prodDesc').value = '';
-        document.getElementById('imgPreview').style.display = 'none';
     }
 
     async function deleteProduct(id) {
