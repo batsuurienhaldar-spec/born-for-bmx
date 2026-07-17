@@ -7,16 +7,16 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { background: #0a0a0a; color: #fff; font-family: 'Arial', sans-serif; }
-        header { background: #111; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; border-bottom: 2px solid #e63946; }
+        header { background: #111; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; border-bottom: 2px solid #e63946; gap: 16px; flex-wrap: wrap; }
         .logo { font-size: 28px; font-weight: 900; color: #e63946; letter-spacing: 2px; }
-        nav a { color: #fff; text-decoration: none; margin-left: 30px; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s; }
+        nav { display: flex; align-items: center; gap: 24px; }
+        nav a { color: #fff; text-decoration: none; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s; }
         nav a:hover { color: #e63946; }
-        .search-wrap { display: flex; align-items: center; gap: 8px; }
-        .search-input { background: #1a1a1a; border: 1px solid #333; color: #fff; padding: 8px 14px; border-radius: 20px; font-size: 13px; outline: none; width: 200px; transition: all 0.3s; }
-        .search-input:focus { border-color: #e63946; width: 260px; }
+        .search-wrap { display: flex; align-items: center; gap: 6px; }
+        .search-input { background: #1a1a1a; border: 1px solid #333; color: #fff; padding: 8px 14px; border-radius: 20px; font-size: 13px; outline: none; width: 180px; transition: all 0.3s; }
+        .search-input:focus { border-color: #e63946; width: 220px; }
         .search-input::placeholder { color: #555; }
-        .search-clear { background: none; border: none; color: #555; cursor: pointer; font-size: 16px; padding: 0 4px; display: none; }
-        .search-badge { background: #e63946; color: #fff; font-size: 11px; padding: 2px 8px; border-radius: 10px; margin-left: 8px; display: none; }
+        .search-clear { background: none; border: none; color: #555; cursor: pointer; font-size: 16px; display: none; }
         .hero { background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%); padding: 120px 40px; text-align: center; }
         .hero h1 { font-size: 72px; font-weight: 900; text-transform: uppercase; letter-spacing: 6px; animation: fadeUp 0.8s ease; }
         .hero h1 span { color: #e63946; }
@@ -24,16 +24,20 @@
         @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
         .categories { padding: 20px 40px; background: #111; border-bottom: 1px solid #222; border-top: 1px solid #222; }
         .cat-row { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-bottom: 8px; }
-        .cat-row:last-child { margin-bottom: 0; }
         .cat-btn { background: #1a1a1a; color: #fff; border: 1px solid #333; padding: 8px 18px; border-radius: 4px; cursor: pointer; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s; }
         .cat-btn:hover, .cat-btn.active { background: #e63946; border-color: #e63946; transform: translateY(-2px); }
         .subcat-row { display: none; gap: 8px; flex-wrap: wrap; justify-content: center; padding: 8px 0; border-top: 1px solid #222; margin-top: 8px; }
         .subcat-row.show { display: flex; }
-        .subcat-btn { background: #0a0a0a; color: #aaa; border: 1px solid #222; padding: 6px 14px; border-radius: 4px; cursor: pointer; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s; }
+        .subcat-btn { background: #0a0a0a; color: #aaa; border: 1px solid #222; padding: 6px 14px; border-radius: 4px; cursor: pointer; font-size: 11px; text-transform: uppercase; transition: all 0.3s; }
         .subcat-btn:hover, .subcat-btn.active { background: #333; border-color: #e63946; color: #fff; }
-        .products { padding: 60px 40px; }
-        .products h2 { font-size: 32px; font-weight: 900; text-transform: uppercase; margin-bottom: 40px; letter-spacing: 2px; }
-        .products h2 span { color: #e63946; }
+        .products { padding: 40px 40px 60px; }
+        .sort-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 12px; }
+        .sort-bar h2 { font-size: 28px; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; }
+        .sort-bar h2 span { color: #e63946; }
+        .sort-btns { display: flex; gap: 8px; }
+        .sort-btn { background: #1a1a1a; color: #aaa; border: 1px solid #333; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-size: 12px; text-transform: uppercase; transition: all 0.2s; }
+        .sort-btn:hover { border-color: #555; color: #fff; }
+        .sort-btn.active { background: #e63946; color: #fff; border-color: #e63946; }
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; }
         .card { background: #111; border: 1px solid #222; border-radius: 8px; overflow: hidden; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: pointer; }
         .card:hover { transform: translateY(-8px); border-color: #e63946; box-shadow: 0 20px 40px rgba(230, 57, 70, 0.2); }
@@ -46,7 +50,7 @@
         .card:hover .card-name { color: #e63946; }
         .card-price { font-size: 22px; font-weight: 900; color: #e63946; margin-bottom: 16px; }
         .order-btn { width: 100%; background: #e63946; color: #fff; border: none; padding: 12px; font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; border-radius: 4px; transition: all 0.3s; position: relative; overflow: hidden; }
-        .order-btn::before { content: ''; position: absolute; top: 50%; left: 50%; width: 0; height: 0; background: rgba(255,255,255,0.2); border-radius: 50%; transform: translate(-50%, -50%); transition: width 0.6s, height 0.6s; }
+        .order-btn::before { content: ''; position: absolute; top: 50%; left: 50%; width: 0; height: 0; background: rgba(255,255,255,0.2); border-radius: 50%; transform: translate(-50%,-50%); transition: width 0.6s, height 0.6s; }
         .order-btn:hover::before { width: 300px; height: 300px; }
         .order-btn:hover { background: #c1121f; transform: scale(1.02); }
         .tooltip { position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.85); padding: 12px; font-size: 13px; color: #ccc; transform: translateY(100%); transition: transform 0.3s ease; }
@@ -91,17 +95,19 @@
         footer span { color: #e63946; }
         .loading { text-align: center; padding: 40px; color: #666; grid-column: 1/-1; }
         @media (max-width: 768px) {
-            header { padding: 16px 20px; }
+            header { padding: 12px 16px; }
             .logo { font-size: 20px; }
-            nav a { margin-left: 16px; font-size: 12px; }
+            nav a { font-size: 12px; }
+            .search-input { width: 120px; }
+            .search-input:focus { width: 150px; }
             .hero { padding: 60px 20px; }
             .hero h1 { font-size: 36px; letter-spacing: 2px; }
             .hero p { font-size: 15px; }
             .categories { padding: 16px; }
             .cat-btn { padding: 6px 12px; font-size: 10px; }
             .subcat-btn { padding: 5px 10px; font-size: 10px; }
-            .products { padding: 30px 12px; }
-            .products h2 { font-size: 24px; margin-bottom: 20px; }
+            .products { padding: 20px 12px 40px; }
+            .sort-bar h2 { font-size: 20px; }
             .grid { grid-template-columns: repeat(2, 1fr) !important; gap: 10px; }
             .card-img-wrap { height: 130px; }
             .card-body { padding: 10px; }
@@ -149,7 +155,14 @@
 </div>
 
 <section class="products">
-    <h2>OUR <span>PRODUCTS</span></h2>
+    <div class="sort-bar">
+        <h2>OUR <span>PRODUCTS</span></h2>
+        <div class="sort-btns">
+            <button class="sort-btn" id="sortNew" onclick="sortProducts('none')">Шинэ</button>
+            <button class="sort-btn" id="sortLow" onclick="sortProducts('low')">↑ Хямд</button>
+            <button class="sort-btn" id="sortHigh" onclick="sortProducts('high')">↓ Үнэтэй</button>
+        </div>
+    </div>
     <div class="grid" id="productGrid"><div class="loading">Уншиж байна...</div></div>
 </section>
 
@@ -182,7 +195,7 @@
             </div>
             <div class="form-group">
                 <label>Үнэ</label>
-                <input type="text" id="prodPrice" placeholder="жнь: $450">
+                <input type="text" id="prodPrice" placeholder="жнь: 450'000₮">
             </div>
             <div class="form-group">
                 <label>Category</label>
@@ -242,7 +255,6 @@
 
     const ADMIN_PASSWORD = 'bmx2026';
     const CATS = { complete:'Complete Bikes', frames:'Frames & Forks', steering:'Steering', wheels:'Wheels & Tires', drivetrain:'Drivetrain', grind:'Grind', brakes:'Brakes', seat:'Seat & Post', other:'Other' };
-
     const SUBCATS = {
         frames: ['Frame', 'Fork'],
         wheels: ['Hub', 'Rim', 'Tire'],
@@ -257,12 +269,18 @@
     let currentSubcat = 'all';
     let adminCat = 'all';
     let editingId = null;
+    let searchQuery = '';
+    let sortOrder = 'none';
 
     async function loadProducts() {
         const { data, error } = await sb.from('products').select('*').order('id', { ascending: false });
         if (error) { console.error(error); return; }
         products = data || [];
         renderProducts();
+    }
+
+    function getPrice(p) {
+        return parseFloat((p.price || '0').replace(/[^0-9.]/g, '')) || 0;
     }
 
     function copyAndOrder(name, price) {
@@ -275,6 +293,27 @@
         });
     }
 
+    function sortProducts(order) {
+        sortOrder = order;
+        document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
+        const ids = { none: 'sortNew', low: 'sortLow', high: 'sortHigh' };
+        document.getElementById(ids[order]).classList.add('active');
+        renderProducts();
+    }
+
+    function searchProducts() {
+        searchQuery = document.getElementById('searchInput').value.toLowerCase().trim();
+        document.getElementById('searchClear').style.display = searchQuery ? 'block' : 'none';
+        renderProducts();
+    }
+
+    function clearSearch() {
+        document.getElementById('searchInput').value = '';
+        searchQuery = '';
+        document.getElementById('searchClear').style.display = 'none';
+        renderProducts();
+    }
+
     function filterCat(cat, btn) {
         currentCat = cat;
         currentSubcat = 'all';
@@ -283,10 +322,8 @@
         const subcatRow = document.getElementById('subcatRow');
         const subs = SUBCATS[cat] || [];
         if (subs.length > 0) {
-            subcatRow.innerHTML = `
-                <button class="subcat-btn active" onclick="filterSubcat('all', this)">All</button>
-                ${subs.map(s => `<button class="subcat-btn" onclick="filterSubcat('${s}', this)">${s}</button>`).join('')}
-            `;
+            subcatRow.innerHTML = `<button class="subcat-btn active" onclick="filterSubcat('all', this)">All</button>` +
+                subs.map(s => `<button class="subcat-btn" onclick="filterSubcat('${s}', this)">${s}</button>`).join('');
             subcatRow.classList.add('show');
         } else {
             subcatRow.classList.remove('show');
@@ -305,18 +342,16 @@
     function renderProducts() {
         const grid = document.getElementById('productGrid');
         grid.innerHTML = '';
-        let filtered = currentCat === 'all' ? products : products.filter(p => p.cat === currentCat);
-        if (currentSubcat !== 'all') {
-            filtered = filtered.filter(p => p.subcat === currentSubcat);
-        }
-        if (searchQuery) {
-            filtered = filtered.filter(p =>
-                (p.name || '').toLowerCase().includes(searchQuery) ||
-                (p.desc || '').toLowerCase().includes(searchQuery) ||
-                (p.cat || '').toLowerCase().includes(searchQuery) ||
-                (p.subcat || '').toLowerCase().includes(searchQuery)
-            );
-        }
+        let filtered = currentCat === 'all' ? [...products] : products.filter(p => p.cat === currentCat);
+        if (currentSubcat !== 'all') filtered = filtered.filter(p => p.subcat === currentSubcat);
+        if (searchQuery) filtered = filtered.filter(p =>
+            (p.name||'').toLowerCase().includes(searchQuery) ||
+            (p.desc||'').toLowerCase().includes(searchQuery) ||
+            (p.cat||'').toLowerCase().includes(searchQuery) ||
+            (p.subcat||'').toLowerCase().includes(searchQuery)
+        );
+        if (sortOrder === 'low') filtered.sort((a, b) => getPrice(a) - getPrice(b));
+        else if (sortOrder === 'high') filtered.sort((a, b) => getPrice(b) - getPrice(a));
         if (filtered.length === 0) {
             grid.innerHTML = '<div class="empty"><p>Бүтээгдэхүүн байхгүй байна</p></div>';
             return;
@@ -330,34 +365,15 @@
                     ${p.desc ? `<div class="tooltip">${p.desc}</div>` : ''}
                 </div>
                 <div class="card-body">
-                    <div class="card-cat">${CATS[p.cat] || p.cat}${p.subcat ? ' — ' + p.subcat : ''}</div>
+                    <div class="card-cat">${CATS[p.cat]||p.cat}${p.subcat?' — '+p.subcat:''}</div>
                     <div class="card-name">${p.name}</div>
                     <div class="card-price">${p.price}</div>
                     <button class="order-btn">💬 Захиалах</button>
-                </div>
-            `;
-            card.querySelector('.order-btn').addEventListener('click', (e) => {
-                e.stopPropagation();
-                copyAndOrder(p.name, p.price);
-            });
-            card.addEventListener('click', () => {
-                window.location.href = `/product.html?id=${p.id}`;
-            });
+                </div>`;
+            card.querySelector('.order-btn').addEventListener('click', e => { e.stopPropagation(); copyAndOrder(p.name, p.price); });
+            card.addEventListener('click', () => { window.location.href = `/product.html?id=${p.id}`; });
             grid.appendChild(card);
         });
-    }
-
-    function updateSubcatSelect() {
-        const cat = document.getElementById('prodCat').value;
-        const subs = SUBCATS[cat] || [];
-        const group = document.getElementById('subcatGroup');
-        const select = document.getElementById('prodSubcat');
-        if (subs.length > 0) {
-            select.innerHTML = `<option value="">— Сонгох —</option>` + subs.map(s => `<option value="${s}">${s}</option>`).join('');
-            group.style.display = 'block';
-        } else {
-            group.style.display = 'none';
-        }
     }
 
     function filterAdmin(cat, btn) {
@@ -371,28 +387,27 @@
         const filtered = adminCat === 'all' ? products : products.filter(p => p.cat === adminCat);
         document.getElementById('adminProductList').innerHTML = filtered.map(p => `
             <div class="admin-product-item">
-                <img src="${p.img || 'https://placehold.co/50x50/1a1a1a/e63946?text=?'}" onerror="this.src='https://placehold.co/50x50/1a1a1a/e63946?text=?'">
+                <img src="${p.img||'https://placehold.co/50x50/1a1a1a/e63946?text=?'}" onerror="this.src='https://placehold.co/50x50/1a1a1a/e63946?text=?'">
                 <div class="admin-product-info">
                     <strong>${p.name}</strong>
-                    <span>${p.price} — ${CATS[p.cat] || p.cat}${p.subcat ? ' / ' + p.subcat : ''}</span>
+                    <span>${p.price} — ${CATS[p.cat]||p.cat}${p.subcat?' / '+p.subcat:''}</span>
                 </div>
                 <div class="admin-btns">
                     <button class="edit-btn" onclick="startEdit(${p.id})">✏️</button>
                     <button class="delete-btn" onclick="deleteProduct(${p.id})">🗑️</button>
                 </div>
-            </div>
-        `).join('') || '<p style="color:#444;font-size:13px;">Бүтээгдэхүүн байхгүй</p>';
+            </div>`).join('') || '<p style="color:#444;font-size:13px;">Бүтээгдэхүүн байхгүй</p>';
     }
 
     function startEdit(id) {
         const p = products.find(x => x.id === id);
         if (!p) return;
         editingId = id;
-        document.getElementById('prodName').value = p.name || '';
-        document.getElementById('prodPrice').value = p.price || '';
-        document.getElementById('prodCat').value = p.cat || 'complete';
-        document.getElementById('prodImg').value = p.img || '';
-        document.getElementById('prodDesc').value = p.desc || '';
+        document.getElementById('prodName').value = p.name||'';
+        document.getElementById('prodPrice').value = p.price||'';
+        document.getElementById('prodCat').value = p.cat||'complete';
+        document.getElementById('prodImg').value = p.img||'';
+        document.getElementById('prodDesc').value = p.desc||'';
         updateSubcatSelect();
         if (p.subcat) document.getElementById('prodSubcat').value = p.subcat;
         if (p.img) { document.getElementById('imgPreview').src = p.img; document.getElementById('imgPreview').style.display = 'block'; }
@@ -413,6 +428,17 @@
         document.getElementById('cancelBtn').style.display = 'none';
         document.getElementById('formTitle').textContent = 'Бүтээгдэхүүний нэр';
         document.getElementById('subcatGroup').style.display = 'none';
+    }
+
+    function updateSubcatSelect() {
+        const cat = document.getElementById('prodCat').value;
+        const subs = SUBCATS[cat] || [];
+        const group = document.getElementById('subcatGroup');
+        const select = document.getElementById('prodSubcat');
+        if (subs.length > 0) {
+            select.innerHTML = `<option value="">— Сонгох —</option>` + subs.map(s => `<option value="${s}">${s}</option>`).join('');
+            group.style.display = 'block';
+        } else { group.style.display = 'none'; }
     }
 
     async function submitProduct() {
@@ -455,9 +481,7 @@
             document.getElementById('adminForm').classList.add('show');
             updateSubcatSelect();
             renderAdminList();
-        } else {
-            document.getElementById('errorMsg').style.display = 'block';
-        }
+        } else { document.getElementById('errorMsg').style.display = 'block'; }
     }
 
     function previewImg() {
@@ -478,21 +502,6 @@
     document.getElementById('adminModal').addEventListener('click', function(e) {
         if (e.target === this) closeAdmin();
     });
-
-    let searchQuery = '';
-
-    function searchProducts() {
-        searchQuery = document.getElementById('searchInput').value.toLowerCase().trim();
-        document.getElementById('searchClear').style.display = searchQuery ? 'block' : 'none';
-        renderProducts();
-    }
-
-    function clearSearch() {
-        document.getElementById('searchInput').value = '';
-        searchQuery = '';
-        document.getElementById('searchClear').style.display = 'none';
-        renderProducts();
-    }
 
     loadProducts();
 </script>
